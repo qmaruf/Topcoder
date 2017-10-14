@@ -1,46 +1,46 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
+#include <bits/stdc++.h>
 
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
+#define inf 1<<20
 using namespace std;
 
-struct ProblemsToSolve{
+vector<int>p;
+int diff;
 
-vector<int>P;
-int V;
-
-
-int solve(int now, int v1, int v2)
+int f(int cur, int mini, int maxi)
 {
-    if(P[v2]-P[v1]>=V)return 1;
-    int ret = 100000;
-    for(int i = now + 1; i <= now + 2 && i < P.size(); i++ )
+    if(cur >= p.size())return 0;
+    if(maxi - mini > diff)return 0;
+
+    int ans1 = inf;
+    int ans2 = inf;
+
+    if(cur + 1 < p.size())
     {
-        if(P[i] < P[now])v1 = i;
-        if(P[i] > P[now])v2 = i;
-        ret = 1+min(ret, solve(i, v1, v2));
+        mini = min(mini, p[cur+1]);
+        maxi = max(maxi, p[cur+1]);
+        int ans1 = 1 + f(cur+1, mini, maxi);
     }
-    return ret;
-}
 
-int minNumber(vector <int> pleasantness, int variety)
+    if(cur + 2 < p.size())
+    {
+        mini = min(mini, p[cur+2]);
+        maxi = max(maxi, p[cur+2]);
+        int ans1 = 1 + f(cur+2, mini, maxi);
+    }
+
+    return min(ans1, ans2);
+
+}
+struct ProblemsToSolve{
+int minNumber(vector <int> pp, int v)
 {
-    P = pleasantness;
-    V = variety;
-    int ret = solve(0, 0, 0);
+    p = pp;
+    diff = v;
+    int ret = f(0, inf, inf);
     return ret;
 }
 

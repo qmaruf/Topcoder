@@ -29,6 +29,8 @@ int main()
 {
 RememberWordsEasy ___test;
 ___test.run_test(-1);
+int gbase;  
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

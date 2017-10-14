@@ -3,9 +3,20 @@ using namespace std;
 
 struct GoodString{
 string isGood(string s)
-{
-    string ret;
-    return ret;
+{    
+    int b = 0;
+    for(int i = s.length() - 1; i >= 0; i--)
+    {
+    	// cout<<s[i]<<endl;
+    	if(s[i] == 'a')
+		{
+			b--;
+    		if(b < 0)break;
+    	}
+    	else b++;
+    }
+    // cout<<b<<endl;
+    return b == 0 ? "Good" : "Bad";
 }
 
 // BEGIN CUT HERE
@@ -31,7 +42,7 @@ int main()
 GoodString ___test;
 ___test.run_test(-1);
 int gbase;  
-cin>>gbase; // erase this line if you are not using dev-cpp! :)
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

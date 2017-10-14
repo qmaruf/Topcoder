@@ -1,23 +1,58 @@
-#include <bits/stdc++.h>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+#include<cctype>
+
+#include<cmath>
+#include<iostream>
+#include<fstream>
+
+#include<string>
+#include<vector>
+#include<queue>
+#include<map>
+#include<algorithm>
+#include<set>
+#include<sstream>
+#include<stack>
 using namespace std;
 
-
 struct PrivateD2party{
+
 vector<int>mark, a;
+
+bool dfs(int x)
+{
+    if(a[x] == x)return false;
+    if(mark[x] == 0)
+    {
+        mark[x] = 1;
+        bool ret = dfs(a[x]);
+        mark[x] = 2;
+        return ret;
+    }
+    if(mark[x]==1)return true;
+    return false;
+
+}
 int getsz(vector <int> a)
 {
-	this->a = a;
-    int ret = 0;
+    int ret;
     int n = a.size();
-    mark = vector<int>(n, 0);
+    this->a = a;
     int cycle = 0;
-    
-    for(int i = 0; i < n; i++)    
-		if(mark[i] == 0)		
-			if(dfs(i))			
-				cycle++;
-			
-	ret = n - cycle;
+    mark = vector<int>(n, 0);
+    for(int i = 0; i < n; i++)
+    {
+        if(mark[i] == 0)
+        {
+            if(dfs(i))
+            {
+                cycle++;
+            }
+        }
+    }
+    ret = n - cycle;
     return ret;
 }
 
@@ -42,7 +77,7 @@ int main()
 {
 PrivateD2party ___test;
 ___test.run_test(-1);
-int gbase;  
+int gbase;
 cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }

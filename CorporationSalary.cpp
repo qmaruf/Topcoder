@@ -1,39 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAX 101
-#define ll long long
-vector<int>vec[MAX];
-bool vis[MAX];
-map<int, ll>mp;
-
 struct CorporationSalary{
-
-ll solve(int u)
+long long totalSalary(vector <string> relations)
 {
-	if(vec[u].size() == 0)return 1;
-	if(mp.count(u))return mp[u];
-	ll ret = 0;
-	for(int i = 0; i < vec[u].size(); i++)
-		ret += solve(vec[u][i]);
-	mp[u] = ret;
-	return ret;
-}
-ll totalSalary(vector <string> rel)
-{
-	memset(vis, 0, sizeof(vis));
-	for(int i = 0; i < MAX; i++)vec[i].clear();
-	mp.clear(); 
-    ll ret = 0;
-    for(int i = 0; i < rel.size(); i++){    	
-    	for(int j = 0; j < rel[i].length(); j++){    		
-    		if(rel[i][j] == 'Y'){
-    			vec[i].push_back(j);
-    		}
-    	}
-    }
-    for(int i = 0; i < rel.size(); i++)
-       	ret += solve(i);    
+    long long ret;
     return ret;
 }
 

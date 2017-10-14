@@ -1,10 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define MAX 555
+bool vis[MAX];
+int N;
+bool banned[MAX];
 
+vector<string>G;
 struct Fragile2{
+
+
+void dfs(int u)
+{
+	vis[u] = true;
+	for(int i = 0; i < N; i++)
+		if(G[u][i] == 'Y' && vis[i] == false && !banned[i])
+			dfs(i);
+	return;
+}
+int count_comp()
+{
+	int c = 0;
+	memset(vis, 0, sizeof(vis));
+	for(int i = 0; i < N; i++)
+		if(!vis[i] && !banned[i]){
+			c++;
+			dfs(i);
+		}
+	return c;
+}
 int countPairs(vector <string> graph)
 {
-    int ret;
+	N = graph.size();
+	G = graph;
+
+	memset(banned, 0, sizeof(banned));
+    int cc = count_comp();    
+    int ret = 0;
+
+    for(int i = 0; i < N; i++)
+    {
+    	for(int j = i + 1; j < N; j++)
+    	{
+    		memset(banned, 0, sizeof(banned));
+    		banned[i] = banned[j] = 1;
+    		int now = count_comp();
+    		if(now > cc)ret++;
+    	}
+    }
     return ret;
 }
 

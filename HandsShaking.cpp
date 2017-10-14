@@ -16,26 +16,35 @@
 #include<sstream>
 #include<stack>
 using namespace std;
+
 #define ll long long
-#define abs(a) ((a<0)?(-a):(a))
 struct HandsShaking{
-ll A[51];
 
-
-ll countPerfect(int n)
+ll mem[50];
+ll f(int n)
 {
-	A[0]=A[2]=1;
-	A[4]=2;
-	if(n<=4)return A[n];
-	for(int i=6;i<=n;i++){
-		ll sum = 0;
-		for(int j=0;j<=i-2;j+=2){
-			sum += A[j]*A[i-2-j];
-		}
-		A[i]=sum;
-	}
-	return A[n];
-   
+    if(n == 0 || n == 2)return 1;
+    ll ret = 0;
+
+    int l = 0;
+    while(l<=n)
+    {
+        ret += f(l) * f(n-l);
+        l += 2;
+    }
+    //for(int i = 1; i < n; i += 2){
+    //    cout<<i-1<<" "<<n-i-1<<endl;
+    //    ret += f(i-1) * f(n-i-1);
+    //}
+
+    return ret;
+}
+long long countPerfect(int n)
+{
+    memset(mem, -1, sizeof(mem));
+    long long ret = 0;
+    ret = f(n);
+    return ret;
 }
 
 // BEGIN CUT HERE
@@ -57,7 +66,7 @@ int main()
 {
 HandsShaking ___test;
 ___test.run_test(-1);
-int gbase;  
+int gbase;
 cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }

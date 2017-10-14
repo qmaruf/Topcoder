@@ -2,9 +2,12 @@
 using namespace std;
 
 struct GreaterGameDiv2{
-int calc(vector <int> snuke, vector <int> sothe)
+int calc(vector <int> A, vector <int> B)
 {
-    int ret;
+    int ret = 0;
+    for(int i = 0; i < A.size(); i++)
+    	if(A[i] > B[i])
+    		ret++;
     return ret;
 }
 

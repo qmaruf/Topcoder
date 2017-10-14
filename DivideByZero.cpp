@@ -1,42 +1,17 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
-using namespace std;
+#include <bits/stdc++.h>
 
 #define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
+
+using namespace std;
 
 struct DivideByZero{
-int CountNumbers(vector <int> nums)
+int CountNumbers(vector <int> numbers)
 {
-	int sz = 0;
-	set<int>st(nums.begin(),nums.end());
-	while(st.size()!=sz){
-		sz=st.size();
-		for(int a:st){
-			for(int b:st){
-				if(a>b){
-					st.insert(a/b);
-				}
-			}
-		}
-	}
-	return st.size();
-
-
+    int ret;
+    return ret;
 }
 
 // BEGIN CUT HERE

@@ -4,23 +4,7 @@ using namespace std;
 struct EqualSubstrings2{
 int get(string s)
 {
-	cout<<s<<endl;
-    int ret = 0;
-    for(int len = 1; len <= s.length(); len++)
-    {
-    	for(int i = 0; i < s.length(); i++)
-    	{
-    		string left = s.substr(i, len);    		
-
-    		for(int j = i + len; j < s.length(); j++)
-    		{
-    			string right = s.substr(j, len);
-    			// cout<<left << " " << right<<endl; 
-    			if(left == right)
-    				ret++;
-    		}
-    	}
-    }
+    int ret;
     return ret;
 }
 

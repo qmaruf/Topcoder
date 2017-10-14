@@ -1,36 +1,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
+struct Col{
+	string name;
+	long long val;
+	Col(string a, long long b){
+		name = a;
+		val = b;
+	}
+};
+
+bool comp(Col a, Col b)
+{
+	return a.val < b.val;
+}
+
+
 struct AlternateColors{
+
+
 string getColor(long long r, long long g, long long b, long long k)
 {
-	long long c[3] = {r, g, b};
-	string name[3] = {"RED", "GREEN", "BLUE"};
-	int t = 3;
+	vector<Col>vec;
 
-	while(t > 1)
-	{
-		long long mini = c[0];
-		for(int i = 1; i < t; i++)
-			mini = min(mini, c[i]);
-		if( k <= t * mini)
-			return name[(k-1)%t];
+	vec.push_back(Col("RED", r));
+	vec.push_back(Col("GREEN", g));
+	vec.push_back(Col("BLUE", b));
 
-		k = k - t * mini;
-		int oldt = t;
-		t = 0;
-		for(int i = 0; i < oldt; i++)
-		{
-			c[i] -= mini;
-			if(c[i])
-			{
-				c[t] = c[i];
-				name[t] = name[i];
-				t++;
-			}
-		}
+	sort(vec.begin(), vec.end(), comp);
+
+	if(k <= vec[0].val * 3)
+		return vec[k%3 + 1].name;
+
+	k = k - vec[0].val * 3;
+
+	vector<Col>vec1;
+	for(int i = 0; i < vec.size(); i++)
+	{		
+		vec[i].val -= vec[0].val;
+		if(vec[i].val)
+			vec1.push_back(vec[i]);
 	}
-	return name[0];
+
+	sort(vec1.begin(), vec1.end(), comp);
+	int sz = vec1.size();
+
+	if(k <= vec1[0].val * sz)
+		return vec1[k%sz].name;
+
+	k = k - vec1[0].val * 2;
+
+	vector<Col>vec2;
+
+	for(int i = 0; i < vec1.size(); i++)
+	{		
+		vec1[i].val -= vec1[0].val;
+		if(vec1[i].val)
+			vec2.push_back(vec1[i]);
+	}
+
+	return vec2[0].name;
+
+
+		
+
+
+
 }
 
 // BEGIN CUT HERE

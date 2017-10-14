@@ -1,20 +1,4 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct EasyHomework{
@@ -47,7 +31,7 @@ int main()
 EasyHomework ___test;
 ___test.run_test(-1);
 int gbase;  
-cin>>gbase; // erase this line if you are not using dev-cpp! :)
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

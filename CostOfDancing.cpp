@@ -1,28 +1,10 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct CostOfDancing{
-int minimum(int K, vector <int> dc)
+int minimum(int K, vector <int> danceCost)
 {
-    int ret=0;
-	sort(dc.begin(), dc.end());
-	for(int i=0;i<K;i++)ret+=dc[i];
+    int ret;
     return ret;
 }
 

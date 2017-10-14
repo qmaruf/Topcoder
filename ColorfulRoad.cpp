@@ -1,31 +1,44 @@
 #include <bits/stdc++.h>
+
+#define min(a,b) ((a)<(b)?(a):(b))
+#define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
+#define sq(a) ((a)*(a))
+#define inf 1<<20
+
 using namespace std;
 
-map<char, char>nxt;
+vector<int>vec;
+
 struct ColorfulRoad{
 
-string R;
-
-int solve(int cur, char ch)
-{
-
-	if(cur + 1 == R.length())return 0;
-	int ret = 1 << 20;
-	for(int i = cur + 1; i < R.length(); i++)
-	{
-		if(R[i] == ch)
-			ret = min(ret, (i - cur) * (i - cur) + solve(i, nxt[R[i]]));
+int f(int pos, int col, int tot){
+	col = (1+col)%3;
+	if(pos>=sz(vec))return inf;
+	if(pos == sz(vec)-1){
+		cout<<vec[pos]<<" "<<col<<endl;
+		if(vec[pos]==col)return tot+1;
+		else return inf;
+	}
+	int ret = inf;
+	for(int i=pos+1;i<sz(vec);i++){
+		if(vec[i]==col){
+			ret = min(ret,f(i,col,tot+sq(i-pos)));
+		}
 	}
 	return ret;
 }
 int getMin(string road)
 {
-	R = road;
-	nxt['R'] = 'G';
-	nxt['G'] = 'B';
-	nxt['B'] = 'R';
-    int ret = solve(0, nxt[road[0]]);
-    if(ret == 1<<20)ret = -1;
+	vec.clear();
+	for(int i=0;i<len(road);i++){
+		if(road[i]=='R')vec.pb(0);
+		else if(road[i]=='G')vec.pb(1);
+		else vec.pb(2);
+	}
+    int ret = f(0,0,0);
     return ret;
 }
 

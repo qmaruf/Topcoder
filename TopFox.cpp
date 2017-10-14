@@ -2,9 +2,19 @@
 using namespace std;
 
 struct TopFox{
-int possibleHandles(string familyName, string givenName)
+int possibleHandles(string f, string g)
 {
     int ret;
+    set<string>st;
+    for(int i = 0; i < f.length(); i++)
+    {
+    	for(int j = 0; j < g.length(); j++)
+    	{
+    		string t = f.substr(0, i + 1) + g.substr(0, j + 1);
+    		st.insert(t);
+    	}
+    }
+    ret = st.size();
     return ret;
 }
 

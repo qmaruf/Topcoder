@@ -1,52 +1,39 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
-#define INF 1<<20
-int G[51][51];
+
 struct FriendScore{
+
+
 int highestScore(vector <string> F)
 {
-    for(int i = 0; i < F.size(); i++)
-        for(int j = 0; j < F.size(); j++)
-            if(F[i][j] == 'Y')
-                G[i][j] = 1;
-            else
-                G[i][j] = INF;
-            
-    int sz = F.size();
-    for(int i = 0; i < sz; i++)
-        for(int j = 0; j < sz; j++)
-            for(int k = 0; k < sz; k++)
-                G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
 
-    int ret = -1;
-    for(int i = 0; i < sz; i++)
-    {
-        int c = 0;
-        for(int j = 0; j < sz; j++)
-        {
-            if(i == j)continue;
-            if(G[i][j] <= 2)
-                c++;
-        }
-        ret = max(ret, c);
-    }
-    return ret;
+
+    int row = F.size();
+    int col = F[0].length();
+    int n = row;
+
+
+    for(int k = 0; k < n; k++)
+    	for(int i = 0; i < n; i++)
+    		for(int j = 0; j < n; j++)
+    			if(F[i][k] == 'Y' && F[k][j] == 'Y')
+    				F[i][j] = 'Y';
+
+    int mx = -1;
+    
+	for(int i = 0; i < row; i++)
+	{
+		int c = 0;
+    	for(int j = 0; j < col; j++)
+    	{    		
+    		if(i == j)continue;
+    		if(F[i][j] == 'Y')c++;
+    	}
+    	mx = max(mx, c);
+    
+	}
+	cout<<mx<<endl;
+    return mx;
 }
 
 // BEGIN CUT HERE

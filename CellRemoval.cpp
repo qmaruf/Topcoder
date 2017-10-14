@@ -1,26 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX 101
-vector<int>vec[MAX];
-struct CellRemoval{
 
-int solve(int rt, int dc)
+struct CellRemoval{
+int cellsLeft(vector <int> parent, int deletedCell)
 {
-	if(rt == dc)return 0;
-	if(vec[rt].size() == 0)return 1;
-	int ret = 0;
-	for(int i = 0; i < vec[rt].size(); i++)
-		ret += solve(vec[rt][i], dc);
-	return ret;
-}
-int cellsLeft(vector <int> parent, int dc)
-{
-	for(int i = 0; i < MAX; i++)vec[i].clear();    
-	int root;
-    for(int i = 0; i < parent.size(); i++)    
-    	if(parent[i] == -1)root = i;
-    	else vec[parent[i]].push_back(i);    
-    int ret = solve(root, dc);
+    int ret;
     return ret;
 }
 

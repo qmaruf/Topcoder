@@ -2,24 +2,9 @@
 using namespace std;
 
 struct FoxAndSightseeing{
-int getMin(vector <int> p)
+int getMin(vector <int> position)
 {
-    int ret = 1<<25;
-    for(int i = 1; i + 1 < p.size(); i++)
-    {
-    	int cost = 0;
-    	vector<int>vec;
-    	for(int j = 0; j < p.size(); j++)
-    	{
-    		if(j == i)continue;
-    		vec.push_back(p[j]);
-    	}
-
-    	for(int j = 1; j < vec.size(); j++)
-    		cost += abs(vec[j] - vec[j-1]);
-
-    	ret = min(ret, cost);
-    }
+    int ret;
     return ret;
 }
 

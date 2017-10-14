@@ -4,22 +4,7 @@ using namespace std;
 struct Istr{
 int count(string s, int k)
 {
-    int ret=0;
-    int cnt[26]={0};
-    for(int i = 0; i < s.length(); i++)
-    	cnt[s[i]-'a']++;    
-    
-    for(int i = 0; i < k; i++){
-    	sort(cnt, cnt+26);
-    	for(int j = 25; j >= 0; j--){
-    		if(cnt[j]!=0){
-				cnt[j]--;
-				break;
-			}
-    	}
-    }
-    for(int i = 0; i < 26; i++)
-    	ret += cnt[i]*cnt[i];
+    int ret;
     return ret;
 }
 

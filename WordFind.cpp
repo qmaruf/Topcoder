@@ -17,16 +17,11 @@
 #include<stack>
 using namespace std;
 
-#define SSTR( x ) dynamic_cast< std::ostringstream & >( \
-        ( std::ostringstream() << std::dec << x ) ).str()
-        
 struct Node
 {
     Node* next[26];
-    int x, y;
-    Node(int a, int b){
-           x = a, y=b;
-           //cout<<"==>"<<a<<" "<<b<<endl;
+    int x=-1, y=-1;
+    Node(){
            memset(next, 0, sizeof(next));
     }
 };
@@ -37,77 +32,89 @@ void insert(Node* root, int x, int y, int r, int c)
 {
      Node* rt = root;
      int p = x, q= y;
+     bool flag = true;
      while(p<r)
      {
          int id = g[p][q] - 'A';
          if(rt->next[id] == NULL)
-         rt->next[id] = new Node(x,y);
+         {
+            rt->next[id] = new Node();
+            if(p+1 == r)
+            {
+                rt->x = x;
+                rt->y = y;
+            }
+
+         }
+
          rt = rt->next[id];
          p++;
      }
-     
+
      rt = root;
      p = x, q = y;
+     flag = true;
      while(q<c)
      {
          int id = g[p][q] - 'A';
          if(rt->next[id] == NULL)
-         rt->next[id] = new Node(x,y);
+         {
+            rt->next[id] = new Node();
+            if(q+1 == c)
+            {
+                rt->x = x;
+                rt->y = y;
+            }
+         }
          rt = rt->next[id];
          q++;
      }
-  
+
      rt = root;
      p = x, q = y;
+     flag = true;
      while(p<r && q<c)
      {
          int id = g[p][q] - 'A';
          if(rt->next[id] == NULL)
-         rt->next[id] = new Node(x,y);
+         {
+            rt->next[id] = new Node();
+            if(p+1 == r && q+1 == c)
+            {
+                rt->x = x;
+                rt->y = y;
+            }
+         }
          rt = rt->next[id];
          p++;q++;
      }
      return;
 }
 
-string tos(int n)
-{
-       string ret = "";
-}
-string findit(Node* root, string word)
+void findit(Node* root, string word)
 {
      Node* r = root;
      int cnt = 0;
-     int x,y;
-     x=y=-1;
+     bool flag = true;
+     int x, y;
      for(int i=0;i<word.length();i++)
      {
           int id = word[i] - 'A';
           if(r->next[id] !=NULL )
           {
-                 cnt++;
-                 r = r->next[id];
+              cnt++;
+              r = r->next[id];
+              if(r->x !=-1 && r->y !=-1)
+              {
+                x = r->x;
+                y = r->y;
+              }
 
-                
-
-                      x = r->x;
-                      y = r->y;
-
-                 //cout<<r->x<<" "<<r->y<<endl;
           }
           else break;
      }
-     
-     if(cnt != word.length()){
-            return "";
-     }
-     return SSTR(x) + " " + SSTR(y);
-     
-     if(cnt == word.length())   
-     {
-            cout<<word<<endl;
-            cout<<x<<" "<<y<<endl;
-            }
+     if(cnt == word.length())
+     cout<<word<<" "<<x<<" "<<y<<endl;
 }
 
 void killit(Node* r)
@@ -120,19 +127,19 @@ void killit(Node* r)
 struct WordFind{
 vector <string> findWords(vector <string> grid, vector <string> wordList)
 {
-    
+
     g = grid;
     int r = grid.size();
     int c = grid[0].length();
     vector <string> ret;
-    Node* root = new Node(-1,-1);
-    
+    Node* root = new Node();
+
     for(int i=0;i<r;i++)
             for(int j=0;j<c;j++)
                     insert(root, i, j, r, c);
     for(int i=0;i<wordList.size();i++)
-    ret.push_back(findit(root, wordList[i]));
-   
+    findit(root, wordList[i]);
+
     killit(root);
     return ret;
 }
@@ -173,7 +180,7 @@ int main()
 {
 WordFind ___test;
 ___test.run_test(-1);
-int gbase;  
+int gbase;
 cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }

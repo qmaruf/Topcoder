@@ -1,42 +1,19 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
 
-string i2s(int n){
-	string ret = "";
-	while(n){
-		ret+=(char)(n%10+48);
-		n=n/10;
-	}
-	reverse(ret.begin(),ret.end());
-	return ret;
-}
 struct FoxAndMp3Easy{
 vector <string> playList(int n)
-{
+{	
     vector <string> ret;
-    for(int i=1;i<=n;i++)
-    	ret.push_back(i2s(i));
-    for(int i=0;i<ret.size();i++){
-    	ret[i]=ret[i]+".mp3";
-    }
-    sort(ret.begin(),ret.end());
-    return ret;
+    for(int i = 1; i <= n; i++)
+    	ret.push_back(to_string(i));
+   	sort(ret.begin(), ret.end());
+   	for(int i = 0; i < n; i++)
+   		ret[i] += ".mp3";
+
+   	if(n > 50)
+   		ret.resize(50);   	
+	return ret;
 }
 
 // BEGIN CUT HERE
@@ -61,7 +38,7 @@ int main()
 FoxAndMp3Easy ___test;
 ___test.run_test(-1);
 int gbase;  
-cin>>gbase; // erase this line if you are not using dev-cpp! :)
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

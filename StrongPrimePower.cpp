@@ -1,60 +1,16 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
+#include <bits/stdc++.h>
 
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
-using namespace std;
+#define pb push_back
 #define ll long long
-bool isprime(int n)
-{
-	for(int i=2;i*i<=n;i++)
-		if(n%i==0)
-			return false;
-	return true;
-}
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
 
-ll s2i(string s)
-{
-	ll ret = 0;
-	for(int i=0;i<(int)s.length();i++){
-		ret = ret*10+(s[i]-'0');
-	}
-	return ret;
-}
+using namespace std;
+
 struct StrongPrimePower{
-vector <int> baseAndExponent(string a)
+vector <int> baseAndExponent(string n)
 {
-	ll n = s2i(a);
-	cout<<n<<endl;
     vector <int> ret;
-    for(int q=2;q<=59;q++)
-    {
-		double dp = pow((double)n, (double)(1.0/(double)q));
-		int p = int(dp+0.00001);
-		cout<<q<<" "<<p<<" "<<dp<<endl;
-		if(isprime(p)){
-		
-		ll r = 1;
-		for(int i=1;i<=q;i++)r=r*p;
-		if(r==n){
-			ret.push_back(p);
-			ret.push_back(q);
-			return ret;
-		}
-	}
-	}
     return ret;
 }
 
@@ -64,7 +20,7 @@ vector <int> baseAndExponent(string a)
 	private:
 	template <typename T> string print_array(const vector<T> &V) { ostringstream os; os << "{ "; for (typename vector<T>::const_iterator iter = V.begin(); iter != V.end(); ++iter) os << '\"' << *iter << "\","; os << " }"; return os.str(); }
 	void verify_case(int Case, const vector <int> &Expected, const vector <int> &Received) { cerr << "Test Case #" << Case << "..."; if (Expected == Received) cerr << "PASSED" << endl; else { cerr << "FAILED" << endl; cerr << "\tExpected: " << print_array(Expected) << endl; cerr << "\tReceived: " << print_array(Received) << endl; } }
-	void test_case_0() { string Arg0 = "94931877133"; int Arr1[] = {37, 7 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(0, Arg1, baseAndExponent(Arg0)); }
+	void test_case_0() { string Arg0 = "27"; int Arr1[] = {3, 3 }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(0, Arg1, baseAndExponent(Arg0)); }
 	void test_case_1() { string Arg0 = "10"; int Arr1[] = { }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(1, Arg1, baseAndExponent(Arg0)); }
 	void test_case_2() { string Arg0 = "7"; int Arr1[] = { }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(2, Arg1, baseAndExponent(Arg0)); }
 	void test_case_3() { string Arg0 = "1296"; int Arr1[] = { }; vector <int> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(3, Arg1, baseAndExponent(Arg0)); }
@@ -78,7 +34,6 @@ vector <int> baseAndExponent(string a)
 // BEGIN CUT HERE
 int main()
 {
-	freopen("out.txt","w",stdout);
 StrongPrimePower ___test;
 ___test.run_test(-1);
 int gbase;  

@@ -2,31 +2,33 @@
 using namespace std;
 
 struct CarolsSinging{
+bool vis[31];
 
-bool vis[100];
-vector<string>G;
-int sz;
-
-void dfs(int u)
+void dfs(int p, vector<string> lyrics)
 {
-    vis[u] = true;
-    for(int i = 0; i < sz; i++)    
-        if(G[u][i] == 'Y' && !vis[i])
-            dfs(i);
-    return;
+	if(!vis[p])
+	{
+		vis[p] = true;
+		for(int i = 0; i < lyrics[p].size(); i++)
+		{
+			if(lyrics[p][i] == 'Y')
+				dfs(i, lyrics);
+		}
+	}
 }
 int choose(vector <string> lyrics)
 {
-    memset(vis, 0, sizeof(vis));
-    G = lyrics;
     int ret = 0;
-    sz = lyrics.size();
-    for(int i = 0; i < sz; i++)
-        if(!vis[i])
-        {
-            dfs(i);
-            ret++;
-        }    
+    // return ret;
+    memset(vis, 0, sizeof(vis));
+    for(int i = 0; i < lyrics.size(); i++)
+    {
+    	if(!vis[i])
+    	{
+    		dfs(i, lyrics);
+    		ret++;
+    	}
+    }
     return ret;
 }
 
@@ -52,8 +54,8 @@ int main()
 {
 CarolsSinging ___test;
 ___test.run_test(-1);
-int gbase;  
-cin>>gbase; // erase this line if you are not using dev-cpp! :)
+int gbase;
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

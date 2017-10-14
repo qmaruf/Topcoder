@@ -1,26 +1,33 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
+#define pcc pair<char, char>
+vector<pcc>vec;
 
+bool pc(pcc a, pcc b)
+{
+	return a.first < b.first;
+}
 struct NextOrPrev{
 int getMinimum(int nextCost, int prevCost, string start, string goal)
 {
-    int ret;
+	vec.clear();
+	if(start == goal)return 0;
+	for(int i = 0; i < start.size(); i++)
+		vec.push_back(make_pair(start[i], goal[i]));
+	sort(vec.begin(), vec.end(), pc);
+	int cost = 0;
+
+	for(int i = 0; i < vec.size(); i++)
+	{
+		if(i != 0 && vec[i].second < vec[i-1].second)return -1;
+		char a = vec[i].first;
+		char b = vec[i].second;
+
+		if(a>b)cost += prevCost * abs(a-b);
+		else cost += nextCost * abs(a-b);
+
+	}
+    int ret = cost;
     return ret;
 }
 
@@ -48,7 +55,7 @@ int main()
 NextOrPrev ___test;
 ___test.run_test(-1);
 int gbase;  
-cin>>gbase; // erase this line if you are not using dev-cpp! :)
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

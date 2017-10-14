@@ -1,18 +1,22 @@
-#include <bits/stdc++.h>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+#include<cctype>
+
+#include<cmath>
+#include<iostream>
+#include<fstream>
+
+#include<string>
+#include<vector>
+#include<queue>
+#include<map>
+#include<algorithm>
+#include<set>
+#include<sstream>
+#include<stack>
 using namespace std;
 
-
-struct S
-{
-    string str;
-    int idx;
-};
-
-bool compare(S a, S b)
-{
-    if(a.str <= b.str)return true;
-    else return false;
-}
 struct LostCharacter{
 vector <int> getmins(vector <string> str)
 {
@@ -20,57 +24,28 @@ vector <int> getmins(vector <string> str)
     int mx = 0;
     for(int i=0;i<str.size();i++)
         mx = max(mx, (int)str[i].length());
-    vector<char>vec;
 
-    for(int pos=0 ;pos<mx; pos++)
+    vector<char>vec[60];
+    for(int pos= 0;pos<mx;pos++)
     {
         char ch = 'z';
         for(int i=0;i<str.size();i++)
         {
-            if(pos < str[i].length())
-            {
+            if(pos + 1 <= str[i].length())
                 if(str[i][pos] != '?')
-                {
                     ch = min(ch, str[i][pos]);
-                }
-            }
         }
-        vec.push_back(ch);
+        vec[pos].push_back(ch);
     }
 
-    vector<S>v;
-    for(int i=0;i<str.size();i++)
+    for(int pos = 0; pos < mx ; pos++)
     {
-        for(int pos=0;pos<str[i].length();pos++)
+        for(int i=0;i<vec[pos].size();i++)
         {
-            if(str[i][pos] == '?')
-                str[i][pos] = vec[pos];
+            cout<<vec[pos][i]<<" ";
         }
-        S s;
-        s.str = str[i];
-        s.idx = i;
-        v.push_back(s);
+        cout<<endl;
     }
-
-    sort(v.begin(), v.end(), compare);
-
-    for(int i=0;i<v.size();i++)
-        cout<<v[i].str<<" "<<v[i].idx<<endl;
-
-    for(int i=0;i<str.size();i++)
-    {
-        for(int j=0;j<v.size();j++)
-        {
-            if(v[j].idx == i)
-            {
-                ret.push_back(j);
-                break;
-            }
-        }
-    }
-
-
-
     return ret;
 }
 

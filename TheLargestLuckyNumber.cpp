@@ -1,25 +1,15 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
+#include <bits/stdc++.h>
 
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
+#define MAX 1000000
 using namespace std;
 
-int f(int a, int n){
-	if(a>n)return -1;
+int f(int a,int n){
 	if(a==n)return n;
+	if(a>n)return -1;
 	int aa = a*10+4;
 	int bb = a*10+7;
 	int x = max(a,f(aa,n));
@@ -29,7 +19,7 @@ int f(int a, int n){
 struct TheLargestLuckyNumber{
 int find(int n)
 {
-    int ret=f(0,n);
+	int ret = f(0,n);
     return ret;
 }
 

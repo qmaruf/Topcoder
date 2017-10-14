@@ -1,18 +1,27 @@
-#include <bits/stdc++.h>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+#include<cctype>
+
+#include<cmath>
+#include<iostream>
+#include<fstream>
+
+#include<string>
+#include<vector>
+#include<queue>
+#include<map>
+#include<algorithm>
+#include<set>
+#include<sstream>
+#include<stack>
 using namespace std;
 
 struct InfiniteString{
 string equal(string s, string t)
 {
-	cout<<s<<" "<<t<<endl;
     string ret;
-    int n = s.length() * t.length();
-    string S = s, T = t;
-    while((int)S.length() != n)S = S + s;
-    while((int)T.length() != n)T = T + t;
-    cout<<S<<" "<<T<<endl;
-    if(S == T)return "Equal";
-    else return "Not equal";
+    return ret;
 }
 
 // BEGIN CUT HERE

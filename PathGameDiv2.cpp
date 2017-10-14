@@ -1,105 +1,111 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
-
-#include<cmath>
-#include<iostream>
-#include<fstream>
-
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
+#include <bits/stdc++.h>
 using namespace std;
 
-struct S
-{
+struct PathGameDiv2{
+
+
+int R, C;
+vector <string> G;
+
+struct Point{
 	int x, y;
-	int dist;
+	Point(int a, int b){
+		x = a;
+		y = b;
+	}
 };
+#define ppi pair<Point, int>
+bool vis[3][500];
 
-bool vis[2][100];
-vector<string>brd;
-int len;
 
-bool valid(S p)
+
+
+int bfs(int x1, int y1, int x2, int y2)
 {
-	if(p.x < 0 || p.y < 0 || p.x >= len || p.y >= len || brd[p.x][p.y] == '#' || vis[p.x][p.y] == true)return false;
-	vis[p.x][p.y] = true;
-	return true;
-}
-int bfs(S u, S v)
-{
-	cout<< u.x <<" "<<u.y <<" "<<v.x<<" "<<v.y<<endl;
-	u.dist = 1;
-	queue<S>q;
-	q.push(u);
+	memset(vis, 0, sizeof(vis));
+	queue<ppi>q;
+	q.push(make_pair(Point(x1, y1), 0));
+	vis[x1][y1] = true;
+
 	while(!q.empty())
 	{
-		u = q.front(); q.pop();
-		if(u.x == v.x && u.y == v.y)return u.dist;
-		S p;
-		p.x = (u.x + 1)%2;
-		p.y = u.y;
-		if(valid(p))
-		{
-			p.dist = 1+u.dist;
-			q.push(p);
+		ppi u = q.front();
+		q.pop();
+
+		int x = u.first.x;
+		int y = u.first.y;
+		int cost = u.second;
+
+		if(x == x2 && y == y2){
+			cout<<x1<<" "<<y1<<endl;
+			cout<<"dest "<<x2<<" "<<y2<<endl;
+			return cost;
 		}
-		p.x = u.x;
-		p.y = u.y+1;
-		if(valid(p))
+
+		for(int i = -1; i < 2; i++)
 		{
-			p.dist = 1+u.dist;
-			q.push(p);
+			for(int j = -1; j < 2; j++)
+			{
+				if(i == 0 && j == 0)continue;
+				int dx = x + i;
+				int dy = y + j;
+
+				if(dx >= 0 && dx < R && dy >= 0 && dy < C)
+				{
+					if(!vis[dx][dy] && G[dx][dy] == '.')
+					{
+						cout<<"__ "<<dx<<" "<<dy<<endl;
+						vis[dx][dy] = true;
+						q.push(make_pair(Point(dx, dy), cost+1));
+					}
+				}
+			}
 		}
 	}
 	return -1;
 }
-struct PathGameDiv2{
-int calc(vector <string> b)
+
+
+
+
+int calc(vector <string> board)
 {
-	int wc = 0;
-	for(int i=0;i<b.size();i++)
-		for(int j=0;j<b[i].length();j++)
-			if(b[i][j]=='.')
-				wc++;
-	brd = b;
-	len = b[0].length();
+	int ret = -1;
+	int tot = 0;
+	R = board.size();
+	C = board[0].length();
+	G = board;
 
-	int A[4] = {0,0,1,0};
-	int B[4] = {0,len-1, 1,len-1};
+	for(int i = 0; i < R; i++)
+		for(int j = 0; j < C; j++)
+			if(G[i][j] == '.')
+				tot++;
 
-	int ret = 1<<20;
-	for(int i=0;i<4;i+=2)
+	cout<<"tot "<<tot<<endl;
+	
+	int x[] = {0, 1, 0, 1};
+	int y[] = {0, 0, C - 1, C - 1};
+
+	for(int i = 0; i < 2; i++)
 	{
-		for(int j=0;j<4;j+=2)
+		for(int j = 2; j < 4; j++)
 		{
-			int x1 = A[i];
-			int y1 = A[i+1];
-			int x2 = B[j];
-			int y2 = B[j+1];
-			if(brd[x1][y1] == '#' || brd[x2][y2] == '#')continue;
-			S u,v;
-			u.x = x1, u.y = y1, v.x = x2, v.y = y2;
-			memset(vis, 0, sizeof(vis));
-			int dist = bfs(u, v);
-			if(dist!=-1)
-			{
-				// cout<<"-- "<<dist<<endl;
-				ret = min(ret, dist);
-			} 
+			int x1 = x[i];
+			int y1 = y[i];
+
+			int x2 = x[j];
+			int y2 = y[j];
+
+			if(G[x1][y1] == '#' || G[x2][y2] == '#')continue;
+
+			int cost = bfs(x1, y1, x2, y2);
+			cout<<cost<<endl;
+			if(cost != -1)
+				ret = max(ret, tot - cost);
 		}
 	}
-	//cout<<wc<<endl;
-    return wc-ret;
+	return ret;
 }
-
 // BEGIN CUT HERE
 	public:
 	void run_test(int Case) { if ((Case == -1) || (Case == 0)) test_case_0(); if ((Case == -1) || (Case == 1)) test_case_1(); if ((Case == -1) || (Case == 2)) test_case_2(); if ((Case == -1) || (Case == 3)) test_case_3(); }

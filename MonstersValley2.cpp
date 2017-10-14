@@ -1,31 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define inf 1<<24
-struct MonstersValley2
-{
-
-int N;
+#define ll long long
+struct MonstersValley2{
 vector <int> dread;
 vector <int> price;
-
-int solve(int cur, int mypower, int mycost)
-{
-
-	if(cur>= N)return 0;
-	int best = inf;
-	if(dread[cur] > mypower && cur + 1 < N)
-		best = min(best, mycost + price[cur] + solve(cur+1, mypower + dread[cur]));
-	if(cur + 1 < N)
-		best = min(best, mycost + price[cur+1] + solve(cur+2, mypower + dread[cur+1]));
-	return best;
+int solve(int cur, ll curdread)
+{	
+	if(cur >= dread.size())return 0;
+	else
+	{		
+		int res = solve(cur + 1, curdread + dread[cur]) + price[cur];		
+		if(curdread >= dread[cur])
+			res = min(res, solve(cur + 1, curdread));
+		return res;
+	}	
 }
 
 int minimumPrice(vector <int> dread, vector <int> price)
 {
 	this->dread = dread;
 	this->price = price;
-	N = dread.size();
-    int ret = solve(1, dread[0], price[0]);
+    int ret = solve(0, 0);
     return ret;
 }
 

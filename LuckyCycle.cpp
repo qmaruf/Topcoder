@@ -1,81 +1,77 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define MAX 111
 #define pb push_back
 #define pii pair<int, int>
+#define MAX 101
+#define vi vector<int>
 
 vector<pii>vec[MAX];
 int N;
-int vis[MAX];
 bool road[MAX][MAX];
+bool vis[MAX];
 
-struct LuckyCycle{
+int dfs(int cur, int to, int prev, int four, int seven)
+{
+    // cout<<cur<<" --> "<<to<<endl;
+    // cout<<cur<<endl;
+    if(cur == to)
+    {
+        if(abs(four - seven) == 1 && four != 0 && seven != 0)
+        {
+            if(four > seven)return 7;
+            else return 4;
+        }
+        else return -1;    
+    }
+    
+    // cout<<cur<<" "<<vec[cur].size()<<endl;
 
-int solve(int cur, int to, int prev, int f, int s)
-{		
-	int ret = -1;
-	if(cur == to)
-	{
-		if(abs(f-s)==1 && (f+s+1)%2==0)
-		{
-			if(f>s)return 7;
-			else return 4;
-		}
-		else
-			return -1;
-	}
-	
-	for(int i = 0; i < vec[cur].size(); i++)
-	{
-		pii v = vec[cur][i];
-		int now = v.first;	
-		int cost = v.second;
-		if(now == prev)continue;
-		if(cost == 4)
-		{
-			ret = solve(now, to, cur, f+1, s);
-			if(ret != -1)break;
-		}
-		if(cost == 7)
-		{
-			ret = solve(now, to, cur, f, s+1);
-			if(ret != -1)break;
-		}
-	}
-	return ret;
-
+    for(int i = 0; i < vec[cur].size(); i++)
+    {
+        pii n = vec[cur][i];
+        if(n.first == prev){            
+            continue;
+        }
+        int v = n.first;
+        int w = n.second;
+        if(w == 4)
+            return dfs(v, to, cur, four + 1, seven);
+        else
+            return dfs(v, to, cur, four, seven + 1);
+    }
+    return -1;
 }
+struct LuckyCycle{
 vector <int> getEdge(vector <int> edge1, vector <int> edge2, vector <int> weight)
 {
     vector <int> ret;
-    N = edge1.size()  + 1;
-    for(int i = 1; i <= N + 1; i++)vec[i].clear();
+    int N = edge1.size() + 1;
     memset(road, 0, sizeof(road));
 
     for(int i = 0; i < edge1.size(); i++)
     {
-    	int u = edge1[i];
-    	int v = edge2[i];
-    	int w = weight[i];
-    	
-    	vec[u].pb(make_pair(v, w));
-    	vec[v].pb(make_pair(u, w));
-
-    	road[u][v] = road[v][u] = 1;
+        int u = edge1[i];
+        int v = edge2[i];
+        int w = weight[i];       
+        vec[u].pb(make_pair(v, w));
+        vec[v].pb(make_pair(u, w));
+        road[u][v] = true;
     }
-
 
     for(int i = 1; i <= N; i++)
     {
-    	for(int j = i + 1; j <= N; j++)
-    	{
-    		if(road[i][j] == false)
-    		{    			
-    			int cost = solve(i, j, -1, 0, 0);
-    			if(cost == 4 || cost == 7)
-    				return	{i, j, cost};	
-    		}
-    	}
+        for(int j = i + 1; j <= N; j++)
+        {
+            
+            if(road[i][j])continue;
+            // cout<<i<<" "<<j<<" "<<road[i][j]<<endl;
+            int x = dfs(i, j, -1, 0, 0);
+            if(x != -1)
+            {
+                ret = {i, j, x};
+                break;
+            }
+        }
     }
     return ret;
 }

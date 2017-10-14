@@ -1,85 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define EMPTY "."
+
 struct MakePalindrome{
+map<char, int>mp;
+
+string copy(char ch, int n)
+{
+	string ret = "";
+	for(int i = 0; i < n; i++)ret += ch;
+	return ret;
+}
 vector <string> constructMinimal(string card)
 {
     vector <string> ret;
-    int A[120] = {0};
-    for(int i = 0; i < card.length(); i++){    	
-    	// int ch = card[i]-'a';
-    	A[card[i]]++;    	
-    }
-
-    // for(int i = 0; i < 120; i++)
-    // 	cout<<A[i]<<endl;
-
-    vector<string>vec;
-    for(int i = 0; i < 120; i++)
+    mp.clear();
+    for(int i = 0; i < card.length(); i++)
     {
-    	if(A[i])
+    	char ch = card[i];
+    	if(mp.count(ch))
+    		mp[ch]+=1;
+    	else
+    		mp[ch]=1;    	
+    }
+    auto it = mp.begin();
+    string tmp = copy(it->first, it->second);    
+    mp[it->first]=0;
+    it++;
+    int ln = 0;
+    for(; it!=mp.end(); it++)
+    {    	
+    	if((it->second)%2==0 && it->second)
     	{
-    		string tmp = "";
-    		for(int j = 0; j < A[i]; j++)
-    			tmp += (char)i;
-    		// cout<<i<<" "<<tmp<<endl;
-    		vec.push_back(tmp);
+    		ln = it->second/2;
+    		mp[it->first]=0;    		
+    	}
+    	else
+    	{
+    		ln = (it->second-1)/2;
+    		mp[it->first]=1;    			
+    	}
+    	tmp = copy(it->first, ln) + tmp + copy(it->first, ln);
+    }  
+
+    
+
+    for(auto it=mp.begin(); it!=mp.end(); it++)
+    {   		
+    	if(it->second==1 && tmp.length()%2==0)
+    	{
+    		string A = tmp.substr(0, tmp.length()/2);
+    		string B = tmp.substr(tmp.length()/2);		
+    		tmp = A + it->first + B;
+    		mp[it->first]=0;
+    		break;
     	}
     }
-    string p, q, res;
-
-    while(1){
-
-    for(int i = 0; i < vec.size(); i++)
-    {
-    	string w1 = vec[i];
-    	if(w1==EMPTY)continue;
-    	bool flag = 0;
-    	for(int j = i+1; j < vec.size(); j++)
-    	{    		
-    		
-    		string w2 = vec[j];
-    		if(w2==EMPTY)continue;
-
-    		int l1 = w1.length();
-    		int l2 = w2.length();
-
-    		if (l1%2==0)
-    		{
-    			p = w1.substr(0, l1/2);
-    			q = w1.substr(l1/2);
-    			res = p + w2 + q;
-    			flag = 1;
-    		}
-    		else if(l2%2==0)
-    		{
-    			p = w2.substr(0, l2/2);
-    			q = w2.substr(l2/2);
-    			res = p + w1 + q;	
-    			flag = 1;
-    		}
-    		if(flag)
-    		{    			
-    			vec[i] = vec[j] = EMPTY;
-    			vec.push_back(res);
-    			break;    			
-    		}    		
-    	}
-    	if(flag)break;
-    }
-    int cnt = 0;
-    for(int i = 0; i < vec.size();i++)
-    	if(vec[i].length()%2==0)
-    		cnt=1;
-    if(cnt==0)break;
-	}
-
-    for(int i = 0; i < vec.size(); i++){
-    	if(vec[i]!=EMPTY)
-    		ret.push_back(vec[i]);
-    	//cout<<vec[i]<<endl;
-    }
+    ret.push_back(tmp);
+    for(auto it=mp.begin(); it!=mp.end(); it++)
+    	if(it->second)
+    		ret.push_back(string(1, it->first));
     return ret;
+    
 }
 
 // BEGIN CUT HERE
@@ -92,7 +73,7 @@ vector <string> constructMinimal(string card)
 	void test_case_1() { string Arg0 = "abc"; string Arr1[] = {"a", "b", "c" }; vector <string> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(1, Arg1, constructMinimal(Arg0)); }
 	void test_case_2() { string Arg0 = "aaabbbccc"; string Arr1[] = {"aba", "bcb", "cac" }; vector <string> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(2, Arg1, constructMinimal(Arg0)); }
 	void test_case_3() { string Arg0 = "topcoder"; string Arr1[] = {"oco", "d", "e", "p", "r", "t" }; vector <string> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(3, Arg1, constructMinimal(Arg0)); }
-	void test_case_4() { string Arg0 = "aaaaabbbbcccdde"; string Arr1[] = {"z" }; vector <string> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(4, Arg1, constructMinimal(Arg0)); }
+	void test_case_4() { string Arg0 = "z"; string Arr1[] = {"z" }; vector <string> Arg1(Arr1, Arr1 + (sizeof(Arr1) / sizeof(Arr1[0]))); verify_case(4, Arg1, constructMinimal(Arg0)); }
 
 // END CUT HERE
 

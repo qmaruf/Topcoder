@@ -18,10 +18,42 @@
 using namespace std;
 
 struct EightRooks{
-string isCorrect(vector <string> board)
+string isCorrect(vector <string> b)
 {
     string ret;
-    return ret;
+    int r = b.size();
+    int c = b[0].length();
+
+    for(int i = 0; i < r; i++)
+    {
+        int c = 0;
+        for(int j = 0; j < c; j++)
+            if(b[i][j] == 'R')
+                c++;
+        if(c>1)return "Incorrect";
+    }
+
+    for(int i = 0; i < r; i++)
+    {
+        int c = 0;
+        for(int j = 0; j < c; j++)
+            if(b[j][i] == 'R')
+                c++;
+        if(c>1)return "Incorrect";
+    }
+
+     int cc = 0;
+     for(int i = 0; i < r; i++)
+    {
+
+        for(int j = 0; j < c; j++)
+            if(b[j][i] == 'R')
+                cc++;
+
+    }
+    if(cc!=8)return "Incorrect";
+
+    return "Correct";
 }
 
 // BEGIN CUT HERE
@@ -80,7 +112,7 @@ int main()
 {
 EightRooks ___test;
 ___test.run_test(-1);
-int gbase;  
+int gbase;
 cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }

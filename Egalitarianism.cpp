@@ -1,52 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX 51
-vector<int>vec[MAX];
-int vis[MAX];
-int root, H;
+#define inf 1<<20
 struct Egalitarianism{
-
-void dfs(int u, int h)
-{
-	vis[u] = 1;
-	if(h > H)
-	{
-		H = h;
-		root = u;
-	}	
-	for(int i = 0; i < vec[u].size(); i++)
-	{
-		int v = vec[u][i];
-		if(vis[v] == 0)
-			dfs(v, h+1);
-
-	}
-	vis[u] = 2;
-}
 int maxDifference(vector <string> isf, int d)
 {
-	for(int i = 0; i < MAX; i++)
-		vec[i].clear();
+	int A[MAX][MAX];
+	//memset(A,-1,sizeof(A));
+	int sz = isf.size();
 
-	for(int i = 0; i < isf.size(); i++)
-		for(int j = 0; j < isf[i].length(); j++)
-			if(isf[i][j]=='Y')
-				vec[i].push_back(j);
+	for(int i=0;i<sz;i++)
+		for(int j=0;j<sz;j++)
+			if(i==j)A[i][j] = 0;
+			else A[i][j] == (isf[i][j] == 'Y') ? 1 : inf;
 
-	H = -1;
-	memset(vis, 0, sizeof(vis));
-	dfs(0, 0);
 	
-	for(int i = 0; i < isf.size(); i++)
-		if(vis[i]==0)
-			return -1;
+	for(int k=0;k<sz;k++)
+	{
+		for(int i=0;i<sz;i++)
+		{
+			for(int j=0;j<sz;j++)
+			{
+				if(i==j)continue;
+				if(A[i][j] > A[i][k] + A[k][j])
+				{
+					A[i][j] = A[i][k] + A[k][j];
+				}
+			}
+		}
+	}
 
-	H = -1;
-	cout<<root<<endl;
-	memset(vis, 0, sizeof(vis));	
-	dfs(root, 0);
-    
-    int ret = H * d;
+
+	for(int i=0;i<sz;i++)
+		if(A[0][i] == inf)
+			return -1;
+    int ret = -1;
+    for(int i=0;i<sz;i++)
+    	if(A[0][i]==0)continue;
+		else ret = max(ret, A[0][i]);
+
     return ret;
 }
 
@@ -107,7 +99,7 @@ int main()
 Egalitarianism ___test;
 ___test.run_test(-1);
 int gbase;  
-//cin>>gbase; // erase this line if you are not using dev-cpp! :)
+cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

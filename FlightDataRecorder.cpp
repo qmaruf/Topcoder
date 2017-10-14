@@ -1,20 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define PI atan(1.0)*4.0
-#define eps 1e-10
 
 struct FlightDataRecorder{
 double getDistance(vector <int> heading, vector <int> distance)
 {
-    double ret = 0.0;
-    double x = 0.0L, y = 0.0L;
-
-    for(int i = 0; i < heading.size(); i++)
-    {
-    	x += distance[i]*sin(heading[i]*PI/180.0);
-    	y += distance[i]*cos(heading[i]*PI/180.0);
-    }
-    ret = sqrt(x*x + y*y);
+    double ret;
     return ret;
 }
 
@@ -39,6 +29,8 @@ int main()
 {
 FlightDataRecorder ___test;
 ___test.run_test(-1);
+int gbase;  
+//cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }
 // END CUT HERE

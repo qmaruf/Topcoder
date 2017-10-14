@@ -2,76 +2,10 @@
 using namespace std;
 
 struct Permatchd2{
-int visited[100];
-
-void dfs(int u, vector<string>graph)
-{	
-	if(visited[u])return;
-	visited[u]=1;	
-	for(int i = 0; i < graph.size(); i++)	
-		if(graph[u][i]=='Y')
-			dfs(i, graph);		
-}
-
 int fix(vector <string> graph)
 {
-	memset(visited, 0, sizeof(visited));
-    int ret = 0;
-    int sz = graph.size();
-    int cc = 0;
-    int even = 0, odd = 0;
-    for(int i = 0; i < sz; i++)
-	{
-		if(!visited[i])
-		{
-			dfs(i, graph);
-			vector<int>nodes;
-			for(int j = 0; j < sz; j++)
-			{
-				if(visited[j]==1)
-				{
-					nodes.push_back(j);
-					visited[j]=2;
-				}
-			}
-			int n = 0;
-			for(int j = 0; j < nodes.size(); j++)
-			{
-				for(int k = 0; k < nodes.size(); k++)
-				{
-					if(nodes[j]==nodes[k])
-						continue;
-					if(graph[nodes[j]][nodes[k]]=='Y')
-						n++;
-				}
-			}
-			n/=2;
-			if(n&1)odd++;
-			else even++;
-		}
-	}
-	ret = 0;
-	while(even && odd)
-	{
-		even--;
-		odd--;
-		ret++;
-	}
-	if(odd)
-	{
-		if(odd&1)
-		{
-			ret += (odd-1)/2;
-			odd = 1;
-		}	
-		else
-		{
-			ret += odd/2;
-			odd = 0;
-		}
-	}
-	if(odd)ret=-1;
-	return ret;
+    int ret;
+    return ret;
 }
 
 // BEGIN CUT HERE

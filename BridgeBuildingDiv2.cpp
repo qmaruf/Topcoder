@@ -17,42 +17,15 @@
 #include<stack>
 using namespace std;
 
-#define vi vector<int>
 struct BridgeBuildingDiv2{
 int minDiameter(vector <int> a, vector <int> b, int K)
 {
-    int ret = 1 << 20;
-    int n = a.size() + 1;
-    for(int mask = 0; mask < (1 << n); mask++)
+    int ret;
+    int n = a.size();
+    for(int mask = 0; mask < (1<<n); mask++)
     {
         if(__builtin_popcount(mask) == K)
         {
-            vector<vector<int>> dist(2*n, vector<int>(2*n, 1<<20));
-            for(int i = 0; i < n; i++)
-            {
-                if(mask & (1<<i))
-                {
-                    dist[i][i+n] = dist[i+n][i] = 0;
-                }
-            }
-
-            for(int i = 0; i < n-1; i++)
-            {
-                dist[i][i+1] = dist[i+1][i] = a[i];
-                dist[i+n][i+n+1] = dist[i+n+1][i+n] = b[i];
-            }
-
-            for(int k = 0; k < 2*n; k++)
-                for(int i = 0; i < 2*n; i++)
-                    for(int j = 0; j < 2*n; j++)
-                        dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
-
-            int max_dist = 0;
-            for(int i = 0; i < 2*n; i++)
-                for(int j = i+1; j < 2*n ; j++)
-                    max_dist = max(max_dist, dist[i][j]);
-
-            ret = min(ret, max_dist);
 
         }
     }

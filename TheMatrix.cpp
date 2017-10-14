@@ -1,20 +1,10 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
+#include <bits/stdc++.h>
 
-#include<cmath>
-#include<iostream>
-#include<fstream>
+#define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
 
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
 using namespace std;
 
 struct TheMatrix{

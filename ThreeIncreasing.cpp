@@ -4,18 +4,21 @@ using namespace std;
 struct ThreeIncreasing{
 int minEaten(int a, int b, int c)
 {
-    int ret=0;
-    if(b>=c)
+    int ret=10000000;
+    for(int i = 0; i < a; i++)
     {
-    	ret += b-(c-1);
-    	b = c-1;
+    	for(int j = 0; j < b; j++)
+    	{
+    		for(int k = 0; k < c; k++)
+    		{
+    			if(a-i < b-j && b-j < c-k)
+    			{
+    				ret = min(ret, i + j + k);
+    			}
+    		}
+    	}
     }
-    if(a>=b)
-    {
-    	ret += a-(b-1);
-    	a = b-1;
-    }
-    if(a<1 || b<1)ret=-1;
+    if(ret==10000000)ret=-1;
     return ret;
 }
 

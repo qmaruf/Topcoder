@@ -1,33 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define vi vector<int>
-int A[3] = {9, 3, 1};
-
 struct MutaliskEasy{
-
-int f(vi x)
-{
-	cout<<x[0]<<" "<<x[1]<<" "<<x[2]<<endl;
-	if(x[0]<=0&&x[1]<=0&&x[2]<=0)return 0;
-	int steps = 10000;
-	for(int i = 0; i < 3; i++){
-		for(int j = 0; j < 3; j++){
-			for(int k = 0; k < 3; k++){
-				if(i!=j&&j!=k&&k!=i){
-					x[i]-=A[i];x[j]-=A[j];x[k]-=A[k];
-					steps = min(steps, 1 + f(x));
-					x[i]+=A[i];x[j]+=A[j];x[k]+=A[k];
-				}
-			}
-		}
-	}
-	return steps;
-}
 int minimalAttacks(vector <int> x)
-{	
-    int ret = f(x);
-    return ret;
+{
+    queue<pair<vector<int>, int> >q;
+    q.push(make_pair(x, 0));
+    set<vector<int> >st;
+    int w, ret = 1<<20;
+    while(!q.empty())
+    {
+        x = q.front().first;
+        w = q.front().second;
+        q.pop();
+
+        if(x[0] <= 0 && x[1] <= 0 && x[2] <= 0)return w;
+        if(st.count(x))continue;
+        st.insert(x);
+        vector<int>s = {1, 3, 9};
+
+        do{
+            vector<int>v = {x[0] - s[0], x[1] - s[1], x[2] - s[2]};
+            q.push(make_pair(v, w+1));
+        }while(next_permutation(s.begin(), s.end()));
+    }
 }
 
 // BEGIN CUT HERE
@@ -52,7 +48,7 @@ int main()
 {
 MutaliskEasy ___test;
 ___test.run_test(-1);
-int gbase;  
+int gbase;
 cin>>gbase; // erase this line if you are not using dev-cpp! :)
 return 0;
 }

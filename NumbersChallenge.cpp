@@ -1,71 +1,42 @@
-#include<cstdio>
-#include<cstring>
-#include<cstdlib>
-#include<cctype>
+#include <bits/stdc++.h>
 
-#include<cmath>
-#include<iostream>
-#include<fstream>
+#define pb push_back
+#define ll long long
+#define sz(a) (int)a.size()
+#define len(a) (int)a.length()
 
-#include<string>
-#include<vector>
-#include<queue>
-#include<map>
-#include<algorithm>
-#include<set>
-#include<sstream>
-#include<stack>
 using namespace std;
-vector<int>orig;
-map<int,int>mp;
-map<int,int>sums;
+
+bool taken[21];
+vector<int>res;
+vector<ll>sm;
+vector<int>a;
+int ret = 0;
+
+
 struct NumbersChallenge{
-
-void f(int bit, int n){
-	if(mp.find(bit)!=mp.end())return;
-	int sum = 0;
-	for(int i=0;i<n;i++){
-		if(bit&(1<<i))sum+=orig[i];
-	}
-	if(bit == pow(2,n)-1)return;
-	
-	sums[sum]=1;
-	for(int i=0;i<n;i++){
-		if(!(bit&(1<<i))){
-			f(bit|(1<<i),n);
-		}
-	}
-}
-
-
-void BackTrack(int x,int y,int z)
-{
-	for(int i=y;i<z;i++)
-	if(i==y||orig[i]!=orig[i-1])
-	{
-		sums[x+orig[i]]=1;
-		BackTrack(x+orig[i],i+1,z);
-	}
-}
-
 int MinNumber(vector <int> s)
 {
-	mp.clear();
-	sums.clear();
-	sort(s.begin(),s.end());
-	orig = s;
-	int sum=0;
-	for(int i=0;i<s.size();i++){
-		sum+=s[i];
+	int tot = accumulate(s.begin(), s.end(), 0);
+	vector<int>v = vector<int>(tot+1, 0);
+	v[0] = 1;
+	for(int i = 0; i < s.size(); i++)v[s[i]] = 1;
+	for(int i = tot; i>0;i--)
+	{
+		for(int j = 0; j < s.size(); j++)
+		{
+			int pos = i - s[j];
+			if(v[pos])
+			{
+				v[i] = 1;
+				break;
+			}
+		}
 	}
-	sums[sum]=1;
-	//f(0,s.size());
-	BackTrack(0,0,s.size());
+	for(int i = 0; i <= tot; i++)
+		if(v[i] == 0)
+			return i;
 
-	for(int i=1;i<=sum+1;i++){
-		if(sums[i]!=1)return i;
-	}
-	return 1;
 }
 
 // BEGIN CUT HERE

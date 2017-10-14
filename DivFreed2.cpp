@@ -1,32 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int mod = 1000000007;
-int dp[11][100001];
+long long dp[11][100001];
+const int MOD = 1000000007;
 
 struct DivFreed2{
-
-
-
-int f(int n, int a, int k)
-{
-	if(dp[n][a]!=-1)return dp[n][a];
-	int ret = 0;
-	if(n == 1)return 1;
-	for(int b = 1; b <= k; b++){
-		if((a%b)!=0 || a <= b){
-			ret += f(n-1, b, k)%mod;
-		}
-	}
-	dp[n][a]=ret;
-	return ret;
-}
 int count(int n, int k)
 {
-	memset(dp, -1, sizeof(dp));
-    int ret = 0;
+	vector<vector<int> >divisors(k+1);
+	for(int i = 1; i <= k; i++)
+		for(int j = 2*i; j <=k; j += i)
+			divisors[j].push_back(i);
+
+	memset(dp, 0, sizeof(dp));
+
+	for(int i = 1; i <= k; i++)
+		dp[1][i] = 1;
+
+	for(int t = 2; t <= n; t++)
+	{
+		long long sum = 0;
+		for(int i = 1; i <= k; i++)
+			sum += dp[t-1][i];
+
+		sum = sum%MOD;
+
+		for(int i = 1; i <= k; i++)
+		{
+			dp[t][i] = sum;
+			for(int d: divisors[i])
+				dp[t][i] = (dp[t][i] + MOD - dp[t-1][d])%MOD;
+		}
+	}
+
+    long long ret = 0;
     for(int i = 1; i <= k; i++)
-    	ret += f(n, i, k);
+    	ret += dp[n][i];
+
+    ret = ret % MOD;
     return ret;
 }
 
